@@ -1,5 +1,3 @@
-" neobundle
-" set nocompatible
 filetype plugin indent off
 
 if has('vim_starting')
@@ -15,27 +13,18 @@ call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-" NeoBundle 'Shougo/neobundle-vim-recipes'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/vimfiler'
-" NeoBundle 'Shougo/vimproc.vim' " make -f make_mac.mak
 NeoBundle 'Shougo/vimproc.vim', {
-\ 'build': {
-\ 'mac': 'make -f make_mac.mak',
-\ }
-\}
+              \ 'build': {
+              \ 'mac': 'make -f make_mac.mak',
+              \ }
+              \}
 
-" 動作が遅いのでコメント
-"NeoBundle 'marcus/rsense', {
-"\   'autoload': {
-"\     'filetypes': 'ruby',
-"\   },
-"\ }
-"NeoBundle 'supermomonga/neocomplete-rsense.vim'
 NeoBundle 'basyura/unite-rails'
 NeoBundle 'scrooloose/syntastic'
 NeoBundleLazy 'alpaca-tc/alpaca_tags', {
@@ -98,19 +87,12 @@ set expandtab
 " Gstatusなどの高さ
 set previewheight=25
 
-" set lines=200
-" set columns=90
 " colorscheme codeschool
 set encoding=UTF-8
 set fileencodings=utf-8,sjis,cp932
 
 set display=lastline
 set pumheight=10
-" set showmatch
-" set matchtime=1
-
-" call pathogen#infect()
-" call pathogen#helptags()
 set imdisable
 
 syntax on
@@ -170,34 +152,7 @@ function! s:unite_my_settings()"{{{
   inoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
 endfunction"}}}
 
-
-" Vimfiler
-" nmap <Space>ff :<C-u>VimFiler -split -simple -winwidth=35 -no-quit<CR>
-" nmap <Space>fd :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
-
-"vimデフォルトのエクスプローラをvimfilerで置き換える
-" let g:vimfiler_as_default_explorer = 1
-"セーフモードを無効にした状態で起動する
-"let g:vimfiler_safe_mode_by_default = 0
-
 set grepprg=grep\ -nH
-
-" 動作がかったのでコメントアウト
-" また、ctagもうまく効かない
-" rsense
-"let g:rsenseUseOmniFunc = 1
-"if !exists('g:neocomplete#force_omni_input_patterns')
-"  let g:neocomplete#force_omni_input_patterns = {}
-"endif
-"let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-
-" neocomplatecache
-" 起動時に有効化
-"let g:neocomplcache_enable_at_startup = 1
-" 大文字が入力されるまで大文字小文字の区別を無視する
-"let g:neocomplcache_enable_smart_case = 1
-" 強制読み込み 
-"let g:neocomplcache_enable_camel_case_completion  =  1
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -210,7 +165,6 @@ let g:neocomplete#lock_iminsert=1
 set iminsert=1
 
 " for snippets
-" let g:neosnippet#disable_runtime_snippets = { '_' : 1 }
 inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>" 
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -230,18 +184,10 @@ set list
 set listchars=trail:-,tab:>.,extends:<,extends:>,precedes:<,nbsp:_
 set cindent
 
-" カッコの場合にカーソルを戻す
-" imap {} {}<Left>
-" imap [] []<Left>
-" imap () ()<Left>
-" imap "" ""<Left>
-" imap '' ''<Left>
-" imap <> <><Left>
-
 " 無限undo
 if has('persistent_undo')
-	set undodir=~/.vim/undo
-	set undofile
+  set undodir=~/.vim/undo
+  set undofile
 endif
 
 source ~/.vim/bundle/matchit/plugin/matchit.vim
@@ -263,12 +209,7 @@ let g:syntastic_auto_loc_list=2
 
 let g:syntastic_mode_map = { 'mode': 'passive',
             \ 'passive_filetypes': ['ruby'] }
-"            \ 'active_filetypes': ['ruby'] } " rubyのときは保存時に実行
 let g:syntastic_ruby_checkers = ['rubocop']
-
-
-" 遅いのでかっこのハイライトしない
-" let loaded_matchparen = 1
 
 let g:ruby_path=""
 
@@ -286,10 +227,6 @@ nnoremap - <C-x>
 
 nnoremap ) <C-w>>
 nnoremap ( <C-w><
-
-" twitVim
-"let twitvim_count = 50
-"let twitvim_show_header = 0
 
 " emmet vim
 let g:user_emmet_mode = 'iv'
@@ -310,34 +247,6 @@ let g:user_emmet_settings = {
 
 " tab tabnew -> (Real)Ctrl-t
 nnoremap sn :tabnext<CR>
-
-" pushlog to cust_no sql
-command! LogToSql :call LogToSqlFunc()
-function! LogToSqlFunc()
-
-  %s/^.*停止.*\n//g
-  %s/^.*失敗.*\n//g
-  %s/^.*"datetime".*\n//g
-
-  %s/^.*\[\(.*\)\].*$/'\1'/g
-
-  call append(0, "select cust_no from tdevicetoken where device_token in (")
-
-  " 1行目はSQLなので無視する
-  let lines = getline(2, line("$"))
-  let loop_cnt = 2
-  for l in lines
-    if loop_cnt % 100 == 0
-      call setline(loop_cnt, l . ") union ###BREAK###select cust_no from tdevicetoken where device_token in (")
-    else
-      call setline(loop_cnt, l . ",")
-    endif
-    let loop_cnt += 1
-  endfor
-
-  %s/###BREAK###/\r/g
-  %s/\(,\|(\)\n/\1/g
-endfunction
 
 command! ClearUndo :call <sid>ClearUndo()
 function! s:ClearUndo()
@@ -375,7 +284,6 @@ autocmd BufEnter *
     \|  endif
 
 let g:unite_source_tag_max_fname_length = 100
-" let g:unite_source_tag_strict_truncate_string = 0
 
 autocmd BufEnter *
 \   if empty(&buftype)

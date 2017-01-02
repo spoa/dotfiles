@@ -1,7 +1,5 @@
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
 imap <C-j> <ESC>
-" imap <C-Space> <C-x><C-o>
-" inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
 nnoremap <silent> <C-t><C-n> : <C-u>tn<CR>
 nnoremap <silent> <C-t><C-p> : <C-u>tp<CR>
 
@@ -34,5 +32,4 @@ set visualbell t_vb=
 
 set lines=200
 set columns=100
-" colorscheme codeschool
 colorscheme phd
