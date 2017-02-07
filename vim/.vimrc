@@ -66,6 +66,9 @@ NeoBundle "elixir-lang/vim-elixir"
 
 NeoBundle 'slim-template/vim-slim'
 
+" reload browser
+NeoBundle 'tell-k/vim-browsereload-mac'
+
 call neobundle#end()
 
 filetype plugin indent on
@@ -197,7 +200,9 @@ nnoremap sh <C-w>h
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
 nnoremap sl <C-w>l
-nnoremap <C-p> "0p<CR>
+
+" 0レジスタの貼り付け
+nnoremap <C-p> "0p
 
 " 幅調整
 nnoremap <C-w>u <C-w>>
