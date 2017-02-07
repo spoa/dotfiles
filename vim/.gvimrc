@@ -33,3 +33,8 @@ set visualbell t_vb=
 set lines=200
 set columns=100
 colorscheme phd
+
+if filereadable(expand('~/.gvimrc.local'))
+  source ~/.gvimrc.local
+endif
+
