@@ -69,6 +69,11 @@ NeoBundle 'slim-template/vim-slim'
 " reload browser
 NeoBundle 'tell-k/vim-browsereload-mac'
 
+" gtags
+NeoBundle "vim-scripts/gtags.vim"
+NeoBundle 'hewes/unite-gtags'
+
+NeoBundle 'kmnk/vim-unite-giti'
 call neobundle#end()
 
 filetype plugin indent on
@@ -119,7 +124,7 @@ let g:unite_source_file_mru_limit = 50
  
 "file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
 let g:unite_source_file_mru_filename_format = ''
- 
+
 "現在開いているファイルのディレクトリ下のファイル一覧。
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
@@ -135,6 +140,16 @@ nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
 "arails用
 nnoremap <silent> [unite]k :<C-u>Unite rails/
+" giti grep
+nnoremap <silent> [unite]g :<C-u>Unite giti/grep<CR>
+
+" gtags
+nnoremap [gtags] <Nop>
+nmap <C-g> [gtags]
+nnoremap <silent> [gtags]r :<C-u>Unite gtags/ref:<CR>
+nnoremap <silent> [gtags]d :<C-u>Unite gtags/def:<CR>
+nnoremap <silent> [gtags]g :<C-u>Unite gtags/grep:<CR>
+
 "uniteを開いている間のキーマッピング
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
