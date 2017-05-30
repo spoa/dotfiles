@@ -24,6 +24,7 @@ NeoBundle 'Shougo/vimproc.vim', {
               \ 'mac': 'make -f make_mac.mak',
               \ }
               \}
+NeoBundle 'Shougo/vimshell.vim'
 
 NeoBundle 'basyura/unite-rails'
 NeoBundle 'scrooloose/syntastic'
